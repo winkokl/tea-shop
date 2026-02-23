@@ -1,0 +1,15 @@
+{
+  "background_color": "#fff",
+  "description": "Tea: Pre-Build Tea Mobile App Template.",
+  "display": "fullscreen",
+  "icons": [
+	{
+	  "src": "assets/images/fav150x150.png",
+	  "sizes": "150x150",
+	  "type": "image/png"
+	}
+  ],
+  "name": "Tea: Pre-Build Tea Mobile App",
+  "short_name": "Tea",
+  "start_url": "index.html"
+}

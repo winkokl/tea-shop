@@ -1,0 +1,16 @@
+{
+    "name": "Shoptable",
+    "alias": "shoptable",
+    "description": "",
+    "keywords": [],
+    "active":1,
+    "order":0,
+    "group":0,
+    "priority": 0,
+    "providers": [
+        "Modules\\Shoptable\\Providers\\ShoptableServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

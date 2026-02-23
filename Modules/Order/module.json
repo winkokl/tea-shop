@@ -1,0 +1,16 @@
+{
+    "name": "Order",
+    "alias": "order",
+    "description": "",
+    "keywords": [],
+    "active":1,
+    "order":0,
+    "group":0,
+    "priority": 0,
+    "providers": [
+        "Modules\\Order\\Providers\\OrderServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
