@@ -12,6 +12,7 @@ use Modules\Shop\Http\Requests\CreateShopRequest;
 use Modules\Shop\Http\Requests\UpdateShopRequest;
 use Modules\Shop\Http\Requests\ShowShopRequest;
 use Modules\Shop\Repositories\ShopRepository;
+use Modules\Township\Entities\Township;
 
 class ShopController extends Controller
 {
@@ -43,7 +44,8 @@ class ShopController extends Controller
      */
     public function create(ManageShopRequest $request)
     {
-        return view('shop::create');
+        $townships = Township::all();
+        return view('shop::create')->with('townships', $townships);
     }
 
     /**
@@ -53,7 +55,10 @@ class ShopController extends Controller
      */
     public function store(CreateShopRequest $request)
     {
-        $this->shop->create($request->except('_token','_method'));
+        $input = $request->except('_token','_method');
+        $input['status'] = isset($input['status']) ? 1 : 0;
+
+        $this->shop->create($input);
         return redirect()->route('admin.shop.index')->withFlashSuccess(trans('shop::alerts.backend.shop.created'));
     }
 
@@ -65,8 +70,10 @@ class ShopController extends Controller
      */
     public function edit(Shop $shop, ManageShopRequest $request)
     {
+        $townships = Township::all();
         return view('shop::edit')
-            ->withShop($shop);
+            ->withShop($shop)
+            ->with('townships', $townships);
     }
 
     /**
@@ -77,7 +84,10 @@ class ShopController extends Controller
      */
     public function update(Shop $shop, UpdateShopRequest $request)
     {
-        $this->shop->updateById($shop->id,$request->except('_token','_method'));
+        $input = $request->except('_token','_method');
+        $input['status'] = isset($input['status']) ? 1 : 0;
+
+        $this->shop->updateById($shop->id, $input);
 
         return redirect()->route('admin.shop.index')->withFlashSuccess(trans('shop::alerts.backend.shop.updated'));
     }

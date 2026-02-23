@@ -15,6 +15,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Modules\Customer\Repositories\CustomerRepository;
+use Modules\Employee\Entities\Employee;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 
@@ -148,11 +149,24 @@ class UserService extends BaseService
                 'active' => isset($data['active']) && $data['active'] == 1,
                 'is_vendor' => isset($data['is_vendor']),
                 'is_customer' => isset($data['is_customer']),
+                'is_employee' => isset($data['is_employee']) && $data['is_employee'] == 1,
                 'date_of_birth' => isset($data['date_of_birth']) ? $data['date_of_birth'] : null,
             ]);
-           
+
             $user->syncRoles($data['roles'] ?? []);
             $user->syncPermissions($data['permissions'] ?? []);
+
+            // Create employee record if is_employee is checked
+            if (isset($data['is_employee']) && $data['is_employee'] == 1) {
+                Employee::create([
+                    'user_id' => $user->id,
+                    'employee_code' => $data['employee_code'] ?? 'EMP-' . str_pad($user->id, 5, '0', STR_PAD_LEFT),
+                    'position' => $data['position'] ?? null,
+                    'department' => $data['department'] ?? null,
+                    'hire_date' => now(),
+                    'active' => 1,
+                ]);
+            }
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -189,6 +203,7 @@ class UserService extends BaseService
                 'type' => $user->isMasterAdmin() ? $this->model::TYPE_ADMIN : $data['type'] ?? $user->type,
                 'name' => $data['name'],
                 'email' => isset($data['email']) ? $data['email'] : null, // 23-01-2023 update
+                'is_employee' => isset($data['is_employee']) && $data['is_employee'] == 1,
             ]);
 
             if (! $user->isMasterAdmin()) {
@@ -197,6 +212,33 @@ class UserService extends BaseService
 
                 if (! config('boilerplate.access.user.only_roles')) {
                     $user->syncPermissions($data['permissions'] ?? []);
+                }
+            }
+
+            // Handle employee record
+            if (isset($data['is_employee']) && $data['is_employee'] == 1) {
+                // Create or update employee record
+                $employeeData = [
+                    'employee_code' => $data['employee_code'] ?? 'EMP-' . str_pad($user->id, 5, '0', STR_PAD_LEFT),
+                    'position' => $data['position'] ?? null,
+                    'department' => $data['department'] ?? null,
+                    'active' => 1,
+                ];
+
+                if ($user->employee) {
+                    // Update existing employee
+                    $user->employee->update($employeeData);
+                } else {
+                    // Create new employee
+                    Employee::create(array_merge($employeeData, [
+                        'user_id' => $user->id,
+                        'hire_date' => now(),
+                    ]));
+                }
+            } else {
+                // If is_employee is unchecked, soft delete the employee record
+                if ($user->employee) {
+                    $user->employee->delete();
                 }
             }
         } catch (Exception $e) {

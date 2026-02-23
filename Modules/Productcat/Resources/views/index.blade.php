@@ -33,6 +33,8 @@
                         <thead>
                         <tr>
                             <th>{{ __('productcat::labels.backend.productcat.table.id') }}</th>
+                            <th>{{ __('productcat::labels.backend.productcat.table.name') }}</th>
+                            <th>{{ __('productcat::labels.backend.productcat.table.mm_name') }}</th>
                             <th>{{ __('productcat::labels.backend.productcat.table.last_updated') }}</th>
                             <th>{{ __('labels.general.actions') }}</th>
                         </tr>
@@ -71,6 +73,8 @@
                 },
                 columns: [
                     {data: 'id', name: 'id'},
+                    {data: 'name', name: 'name'},
+                    {data: 'mm_name', name: 'mm_name'},
                     {data: 'updated_at', name: 'updated_at'},
                     {data: 'actions', name: 'actions', searchable: false, sortable: false}
                 ],

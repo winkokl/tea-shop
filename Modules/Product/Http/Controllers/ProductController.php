@@ -12,6 +12,8 @@ use Modules\Product\Http\Requests\CreateProductRequest;
 use Modules\Product\Http\Requests\UpdateProductRequest;
 use Modules\Product\Http\Requests\ShowProductRequest;
 use Modules\Product\Repositories\ProductRepository;
+use Modules\Shop\Entities\Shop;
+use Modules\Productcat\Entities\Productcat;
 
 class ProductController extends Controller
 {
@@ -43,7 +45,11 @@ class ProductController extends Controller
      */
     public function create(ManageProductRequest $request)
     {
-        return view('product::create');
+        $shops = Shop::all();
+        $categories = Productcat::all();
+        return view('product::create')
+            ->with('shops', $shops)
+            ->with('categories', $categories);
     }
 
     /**
@@ -53,7 +59,10 @@ class ProductController extends Controller
      */
     public function store(CreateProductRequest $request)
     {
-        $this->product->create($request->except('_token','_method'));
+        $input = $request->except('_token','_method');
+        $input['is_available'] = isset($input['is_available']) ? 1 : 0;
+
+        $this->product->create($input);
         return redirect()->route('admin.product.index')->withFlashSuccess(trans('product::alerts.backend.product.created'));
     }
 
@@ -65,8 +74,12 @@ class ProductController extends Controller
      */
     public function edit(Product $product, ManageProductRequest $request)
     {
+        $shops = Shop::all();
+        $categories = Productcat::all();
         return view('product::edit')
-            ->withProduct($product);
+            ->withProduct($product)
+            ->with('shops', $shops)
+            ->with('categories', $categories);
     }
 
     /**
@@ -77,7 +90,10 @@ class ProductController extends Controller
      */
     public function update(Product $product, UpdateProductRequest $request)
     {
-        $this->product->updateById($product->id,$request->except('_token','_method'));
+        $input = $request->except('_token','_method');
+        $input['is_available'] = isset($input['is_available']) ? 1 : 0;
+
+        $this->product->updateById($product->id, $input);
 
         return redirect()->route('admin.product.index')->withFlashSuccess(trans('product::alerts.backend.product.updated'));
     }

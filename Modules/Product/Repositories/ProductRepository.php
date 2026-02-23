@@ -43,6 +43,9 @@ class ProductRepository extends BaseRepository
     public function getForDataTable()
     {
         return $this->model
-            ->select('*');
+            ->with(['shop', 'category'])
+            ->join('shops', 'product.shop_id', '=', 'shops.id')
+            ->join('productcats', 'product.category_id', '=', 'productcats.id')
+            ->select('product.*', 'shops.name as shop_name', 'productcats.name as category_name');
     }
 }

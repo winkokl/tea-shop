@@ -33,6 +33,9 @@
                         <thead>
                         <tr>
                             <th>{{ __('shop::labels.backend.shop.table.id') }}</th>
+                            <th>{{ __('shop::labels.backend.shop.table.name') }}</th>
+                            <th>Township</th>
+                            <th>Status</th>
                             <th>{{ __('shop::labels.backend.shop.table.last_updated') }}</th>
                             <th>{{ __('labels.general.actions') }}</th>
                         </tr>
@@ -71,6 +74,9 @@
                 },
                 columns: [
                     {data: 'id', name: 'id'},
+                    {data: 'name', name: 'name'},
+                    {data: 'township', name: 'township.name'},
+                    {data: 'status', name: 'status'},
                     {data: 'updated_at', name: 'updated_at'},
                     {data: 'actions', name: 'actions', searchable: false, sortable: false}
                 ],

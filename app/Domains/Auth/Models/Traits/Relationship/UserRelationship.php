@@ -5,6 +5,7 @@ namespace App\Domains\Auth\Models\Traits\Relationship;
 use App\Domains\Auth\Models\PasswordHistory;
 use Modules\Customer\Entities\Customer;
 use Modules\Vendor\Entities\Vendor;
+use Modules\Employee\Entities\Employee;
 use Modules\Order\Entities\Order;
 
 /**
@@ -37,10 +38,18 @@ trait UserRelationship
         return $this->hasOne(Customer::class);
     }
 
+    /**
+     * Get the employee associated with the user.
+     */
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
-    
+
 }

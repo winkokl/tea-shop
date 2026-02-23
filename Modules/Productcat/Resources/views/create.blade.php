@@ -41,6 +41,18 @@
                     </div><!--form-group-->
 
                     <div class="form-group row">
+                    {{ html()->label(__('productcat::labels.backend.productcat.table.mm_name'))->class('col-md-2 form-control-label')->for('mm_name') }}
+
+                        <div class="col-md-10">
+                            {{ html()->text('mm_name')
+                                ->class('form-control')
+                                ->placeholder(__('productcat::labels.backend.productcat.table.mm_name'))
+                                ->attribute('maxlength', 191)
+                                ->required() }}
+                        </div><!--col-->
+                    </div><!--form-group-->
+
+                    <div class="form-group row">
                     {{ html()->label(__('productcat::labels.backend.productcat.table.description'))->class('col-md-2 form-control-label')->for('description') }}
 
                         <div class="col-md-10">

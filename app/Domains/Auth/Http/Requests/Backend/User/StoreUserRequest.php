@@ -38,6 +38,10 @@ class StoreUserRequest extends FormRequest
             'active' => ['sometimes', 'in:1'],
             'email_verified' => ['sometimes', 'in:1'],
             'send_confirmation_email' => ['sometimes', 'in:1'],
+            'is_employee' => ['sometimes', 'in:1'],
+            'employee_code' => ['required_if:is_employee,1', 'max:100', Rule::unique('employees', 'employee_code')],
+            'position' => ['nullable', 'max:100'],
+            'department' => ['nullable', 'max:100'],
             'roles' => ['sometimes', 'array'],
             'roles.*' => [Rule::exists('roles', 'id')->where('type', $this->type)],
             'permissions' => ['sometimes', 'array'],
@@ -53,6 +57,8 @@ class StoreUserRequest extends FormRequest
         return [
             'roles.*.exists' => __('One or more roles were not found or are not allowed to be associated with this user type.'),
             'permissions.*.exists' => __('One or more permissions were not found or are not allowed to be associated with this user type.'),
+            'employee_code.required_if' => __('Employee code is required when creating an employee.'),
+            'employee_code.unique' => __('This employee code is already taken.'),
         ];
     }
 }

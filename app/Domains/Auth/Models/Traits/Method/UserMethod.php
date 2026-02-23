@@ -30,6 +30,11 @@ trait UserMethod
         return $this->type === self::TYPE_ADMIN && $this->is_vendor == 1;
     }
 
+    public function isEmployee(): bool
+    {
+        return $this->type === self::TYPE_ADMIN && $this->is_employee == 1;
+    }
+
     /**
      * @return mixed
      */

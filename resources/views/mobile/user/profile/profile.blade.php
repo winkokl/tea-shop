@@ -155,7 +155,7 @@
             <div class="location-box">
                 <i class="location fa-solid fa-location-dot"></i>
                 <div class="flex-1">
-                    <h6 class="text-white font-w400 mb-0">{{ $logged_in_user->customer->address }}</h6>
+                    
                 </div>
                 {{-- <a href="javascript:void(0);" class="change-btn">Change</a> --}}
             </div>

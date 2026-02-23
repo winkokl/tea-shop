@@ -91,6 +91,7 @@
                         $route = 'admin.'.$module.'.index';
                         $active = 'admin.'.$module.'.*';
                         $mod_trans = $module.'::menus.backend.sidebar.'.$module;
+                        $mod_trans = $module == 'shoptable' ? 'Table Management' : $mod_trans;
                         $permissionName = 'admin.access.'.$module;
                     ?>
                     <ul class="c-sidebar-nav-dropdown-items">

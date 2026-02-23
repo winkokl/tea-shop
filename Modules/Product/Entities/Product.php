@@ -4,6 +4,8 @@ namespace Modules\Product\Entities;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Shop\Entities\Shop;
+use Modules\Productcat\Entities\Productcat;
 
 class Product extends Model
 {
@@ -16,6 +18,22 @@ class Product extends Model
     protected $table = 'product';
 
     protected $fillable = ["id", "shop_id", "category_id", "name", "description", "org_price","promo_price", "cost", "stock_quantity", "is_available"];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class, 'shop_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo(Productcat::class, 'category_id', 'id');
+    }
 
        /**
      * @return string
@@ -60,5 +78,16 @@ class Product extends Model
     public function getActionButtonsAttribute()
     {
             return $this->getShowButtonAttribute().' '.$this->getEditButtonAttribute().' '.$this->getDeleteButtonAttribute();
+    }
+
+    /**
+     * @return string
+     */
+    public function getAvailabilityLabelAttribute()
+    {
+        if($this->is_available){
+            return "<span class='badge badge-success'>Available</span>";
+        }
+        return "<span class='badge badge-danger'>Not Available</span>";
     }
 }

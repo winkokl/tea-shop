@@ -115,6 +115,51 @@
                         </div>
                     </div>
 
+                    <div x-data="{ isEmployee : false }">
+                        <div class="form-group row">
+                            <label for="is_employee" class="col-md-2 col-form-label">@lang('Is Employee')</label>
+
+                            <div class="col-md-10">
+                                <div class="form-check">
+                                    <input
+                                        type="checkbox"
+                                        name="is_employee"
+                                        id="is_employee"
+                                        value="1"
+                                        class="form-check-input"
+                                        x-on:click="isEmployee = !isEmployee"
+                                        {{ old('is_employee') ? 'checked' : '' }} />
+                                </div><!--form-check-->
+                            </div>
+                        </div><!--form-group-->
+
+                        <div x-show="isEmployee">
+                            <div class="form-group row">
+                                <label for="employee_code" class="col-md-2 col-form-label">@lang('Employee Code') <span class="text-danger">*</span></label>
+
+                                <div class="col-md-10">
+                                    <input type="text" name="employee_code" id="employee_code" class="form-control" placeholder="{{ __('Employee Code') }}" value="{{ old('employee_code') }}" maxlength="100" />
+                                </div>
+                            </div><!--form-group-->
+
+                            <div class="form-group row">
+                                <label for="position" class="col-md-2 col-form-label">@lang('Position')</label>
+
+                                <div class="col-md-10">
+                                    <input type="text" name="position" id="position" class="form-control" placeholder="{{ __('Position') }}" value="{{ old('position') }}" maxlength="100" />
+                                </div>
+                            </div><!--form-group-->
+
+                            <div class="form-group row">
+                                <label for="department" class="col-md-2 col-form-label">@lang('Department')</label>
+
+                                <div class="col-md-10">
+                                    <input type="text" name="department" id="department" class="form-control" placeholder="{{ __('Department') }}" value="{{ old('department') }}" maxlength="100" />
+                                </div>
+                            </div><!--form-group-->
+                        </div>
+                    </div>
+
                     @include('backend.auth.includes.roles')
 
                     @if (!config('boilerplate.access.user.only_roles'))

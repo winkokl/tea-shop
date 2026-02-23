@@ -30,10 +30,19 @@ class ShopTableController extends Controller
     public function __invoke(ManageShopRequest $request)
     {
         return DataTables::of($this->shop->getForDataTable())
+            ->addColumn('township', function ($shop) {
+                return $shop->township ? $shop->township->name : 'N/A';
+            })
+            ->addColumn('status', function ($shop) {
+                return $shop->status_label;
+            })
+            ->addColumn('updated_at', function ($shop) {
+                return $shop->updated_at;
+            })
             ->addColumn('actions', function ($shop) {
                 return $shop->action_buttons;
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['status', 'actions'])
             ->make(true);
     }
 }

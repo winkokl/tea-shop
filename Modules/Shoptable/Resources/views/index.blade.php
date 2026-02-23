@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    {{ __('shoptable::labels.backend.shoptable.management') }} <small class="text-muted">{{ __('shoptable::labels.backend.shoptable.list') }}</small>
+                    Table Management <small class="text-muted">Table List</small>
                 </h4>
             </div><!--col-->
 

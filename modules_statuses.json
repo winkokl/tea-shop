@@ -1,8 +1,8 @@
 {
     "CMS": false,
-    "Customer": true,
+    "Customer": false,
     "City": false,
-    "Township": false,
+    "Township": true,
     "POS": false,
     "Product": true,
     "Delivery": false,
@@ -19,10 +19,11 @@
     "ProductType": false,
     "ProductLabel": false,
     "RecycleBin": true,
-    "Region": false,
+    "Region": true,
     "Slider": false,
     "Shop": true,
     "Productcat": true,
     "Shoptable": true,
-    "Orderitem": true
+    "Orderitem": false,
+    "Employee": true
 }

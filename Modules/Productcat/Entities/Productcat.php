@@ -13,7 +13,7 @@ class Productcat extends Model
      *
      * @var string
      */
-    protected $table = 'productcat';
+    protected $table = 'productcats';
 
     protected $fillable = ["id", "name", "mm_name", "description"];
 

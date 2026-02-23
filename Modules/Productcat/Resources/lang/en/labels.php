@@ -25,6 +25,7 @@ return [
                         'sort'             => 'Sort',
                         'id'               => 'ID',
                         'name'             => 'Name',
+                        'mm_name'          => 'MM Name',
                         'description'      => 'Description',
                         'created'          => 'Created',
                         'last_updated'     => 'Last Updated',

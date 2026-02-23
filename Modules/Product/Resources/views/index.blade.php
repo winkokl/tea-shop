@@ -32,8 +32,14 @@
                     <table id="product-table" class="table table-condensed table-hover">
                         <thead>
                         <tr>
-                            <th>{{ __('product::labels.backend.product.table.id') }}</th>
-                            <th>{{ __('product::labels.backend.product.table.last_updated') }}</th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Shop</th>
+                            <th>Category</th>
+                            <th>Original Price</th>
+                            <th>Promo Price</th>
+                            <th>Stock</th>
+                            <th>Status</th>
                             <th>{{ __('labels.general.actions') }}</th>
                         </tr>
                         </thead>
@@ -70,8 +76,14 @@
                     }
                 },
                 columns: [
-                    {data: 'id', name: 'id'},
-                    {data: 'updated_at', name: 'updated_at'},
+                    {data: 'id', name: 'product.id'},
+                    {data: 'name', name: 'product.name'},
+                    {data: 'shop', name: 'shops.name'},
+                    {data: 'category', name: 'productcats.name'},
+                    {data: 'org_price', name: 'product.org_price'},
+                    {data: 'promo_price', name: 'product.promo_price'},
+                    {data: 'stock_quantity', name: 'product.stock_quantity'},
+                    {data: 'status', name: 'status', searchable: false, sortable: false},
                     {data: 'actions', name: 'actions', searchable: false, sortable: false}
                 ],
                 order: [[0, "asc"]],

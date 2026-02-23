@@ -4,6 +4,7 @@ namespace Modules\Shop\Entities;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Township\Entities\Township;
 
 class Shop extends Model
 {
@@ -15,7 +16,15 @@ class Shop extends Model
      */
     protected $table = 'shops';
 
-    protected $fillable = ["id", "name", "mm_name", "phone", "township_id", "address"];
+    protected $fillable = ["id", "name", "mm_name", "phone", "township_id", "address", "status"];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function township()
+    {
+        return $this->belongsTo(Township::class, 'township_id', 'id');
+    }
 
        /**
      * @return string
@@ -60,5 +69,16 @@ class Shop extends Model
     public function getActionButtonsAttribute()
     {
             return $this->getShowButtonAttribute().' '.$this->getEditButtonAttribute().' '.$this->getDeleteButtonAttribute();
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusLabelAttribute()
+    {
+        if($this->status){
+            return "<span class='badge badge-success'>Active</span>";
+        }
+        return "<span class='badge badge-danger'>Inactive</span>";
     }
 }
