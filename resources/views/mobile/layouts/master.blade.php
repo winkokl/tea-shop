@@ -39,8 +39,10 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     @yield('after-styles-end')
+	@livewireStyles
 </head>
 <body data-theme-color="color-primary">
+	@livewireScripts
     @yield('page-wraper')
 <div class="page-wraper">
 

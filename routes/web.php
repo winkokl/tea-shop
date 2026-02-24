@@ -10,7 +10,7 @@ use App\Http\Controllers\LocaleController;
 
 // Switch between the included languages
 Route::get('lang/{lang}', [LocaleController::class, 'change'])->name('locale.change');
-
+Route::get('/m-pos', \App\Http\Livewire\MobilePos::class);
 /*
  * Frontend Routes
  */
