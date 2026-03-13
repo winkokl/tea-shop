@@ -19,10 +19,29 @@ class Orderitem extends Model
         "id",
         "order_id",
         "product_id",
+        "product_name",
         "quantity",
         "unit_price",
         "subtotal",
+        "price",
+        "total",
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function order()
+    {
+        return $this->belongsTo(\Modules\Order\Entities\Order::class, 'order_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function product()
+    {
+        return $this->belongsTo(\Modules\Product\Entities\Product::class, 'product_id', 'id');
+    }
 
        /**
      * @return string

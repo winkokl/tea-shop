@@ -27,7 +27,43 @@ class Order extends Model
         "payment_status",
         "order_status",
         "ordered_at",
+        "customer_name",
+        "customer_phone",
+        "total",
+        "status",
 ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function shop()
+    {
+        return $this->belongsTo(\Modules\Shop\Entities\Shop::class, 'shop_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function table()
+    {
+        return $this->belongsTo(\Modules\Shoptable\Entities\Shoptable::class, 'table_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orderItems()
+    {
+        return $this->hasMany(\Modules\Orderitem\Entities\Orderitem::class, 'order_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function items()
+    {
+        return $this->hasMany(\Modules\Orderitem\Entities\Orderitem::class, 'order_id', 'id');
+    }
 
        /**
      * @return string
