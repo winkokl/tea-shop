@@ -24,7 +24,26 @@
 
         <div class="row mt-4 mb-4">
             <div class="col">
-                
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th width="30%">Shop</th>
+                            <td>{{ $shoptable->shop ? $shoptable->shop->name : 'N/A' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Table Number</th>
+                            <td>{{ $shoptable->table_number }}</td>
+                        </tr>
+                        <tr>
+                            <th>Capacity</th>
+                            <td>{{ $shoptable->capacity }} seats</td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>{!! $shoptable->status_label !!}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div><!--col-->
         </div><!--row-->
     </div><!--card-body-->

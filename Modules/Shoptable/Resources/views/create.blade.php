@@ -7,7 +7,8 @@
 @endsection
 
 @push('after-styles')
-
+    {{ style('assets/plugins/select2/css/select2.min.css') }}
+    {{ style('assets/plugins/select2/css/select2-bootstrap.min.css') }}
 @endpush
 
 @section('content')
@@ -29,25 +30,52 @@
                 <div class="col">
 
                     <div class="form-group row">
-                    {{ html()->label(__('shoptable::labels.backend.shoptable.table.name'))->class('col-md-2 form-control-label')->for('name') }}
+                        {{ html()->label('Shop')->class('col-md-2 form-control-label')->for('shop_id') }}
 
                         <div class="col-md-10">
-                            {{ html()->text('name')
+                            <select name="shop_id" id="shop_id" class="form-control shop-select" required="required">
+                                <option value=""></option>
+                                @foreach ($shops as $shop)
+                                    <option value="{{ $shop->id }}" {{ $shop->id == old('shop_id') ? 'selected' : ''}}>{{ $shop->name }}</option>
+                                @endforeach
+                            </select>
+                        </div><!--col-->
+                    </div><!--form-group-->
+
+                    <div class="form-group row">
+                        {{ html()->label('Table Number')->class('col-md-2 form-control-label')->for('table_number') }}
+
+                        <div class="col-md-10">
+                            {{ html()->text('table_number')
                                 ->class('form-control')
-                                ->placeholder(__('shoptable::labels.backend.shoptable.table.name'))
+                                ->placeholder('e.g. T1, T2, A1')
                                 ->attribute('maxlength', 191)
                                 ->required() }}
                         </div><!--col-->
                     </div><!--form-group-->
 
                     <div class="form-group row">
-                    {{ html()->label(__('shoptable::labels.backend.shoptable.table.description'))->class('col-md-2 form-control-label')->for('description') }}
+                        {{ html()->label('Capacity')->class('col-md-2 form-control-label')->for('capacity') }}
 
                         <div class="col-md-10">
-                            {{ html()->textarea('description')
+                            {{ html()->number('capacity')
                                 ->class('form-control')
-                                ->placeholder(__('shoptable::labels.backend.shoptable.table.description'))
+                                ->placeholder('Number of seats')
+                                ->attribute('min', 1)
+                                ->value(4)
                                 ->required() }}
+                        </div><!--col-->
+                    </div><!--form-group-->
+
+                    <div class="form-group row">
+                        {{ html()->label('Status')->class('col-md-2 form-control-label')->for('status') }}
+
+                        <div class="col-md-10">
+                            <select name="status" id="status" class="form-control" required="required">
+                                <option value="available" {{ old('status') == 'available' ? 'selected' : '' }}>Available</option>
+                                <option value="occupied" {{ old('status') == 'occupied' ? 'selected' : '' }}>Occupied</option>
+                                <option value="reserved" {{ old('status') == 'reserved' ? 'selected' : '' }}>Reserved</option>
+                            </select>
                         </div><!--col-->
                     </div><!--form-group-->
                 </div><!--col-->
@@ -70,9 +98,14 @@
 @endsection
 
 @push('after-scripts')
+    {{ script('assets/plugins/select2/js/select2.full.min.js')}}
+    {{ script("assets/plugins/select2/component/components-select2.js") }}
 
 <script>
-
-
+    $(document).ready(function() {
+        $('.shop-select').select2({
+            placeholder: "Choose Shop"
+        });
+    });
 </script>
 @endpush

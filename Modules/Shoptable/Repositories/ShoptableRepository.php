@@ -43,6 +43,7 @@ class ShoptableRepository extends BaseRepository
     public function getForDataTable()
     {
         return $this->model
-            ->select('*');
+            ->with('shop')
+            ->select('shoptable.*');
     }
 }

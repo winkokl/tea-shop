@@ -33,6 +33,10 @@
                         <thead>
                         <tr>
                             <th>{{ __('shoptable::labels.backend.shoptable.table.id') }}</th>
+                            <th>Shop</th>
+                            <th>Table Number</th>
+                            <th>Capacity</th>
+                            <th>Status</th>
                             <th>{{ __('shoptable::labels.backend.shoptable.table.last_updated') }}</th>
                             <th>{{ __('labels.general.actions') }}</th>
                         </tr>
@@ -71,6 +75,10 @@
                 },
                 columns: [
                     {data: 'id', name: 'id'},
+                    {data: 'shop', name: 'shop.name'},
+                    {data: 'table_number', name: 'table_number'},
+                    {data: 'capacity', name: 'capacity'},
+                    {data: 'status', name: 'status'},
                     {data: 'updated_at', name: 'updated_at'},
                     {data: 'actions', name: 'actions', searchable: false, sortable: false}
                 ],

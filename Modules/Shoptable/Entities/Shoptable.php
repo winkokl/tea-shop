@@ -4,6 +4,7 @@ namespace Modules\Shoptable\Entities;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Shop\Entities\Shop;
 
 class Shoptable extends Model
 {
@@ -16,6 +17,14 @@ class Shoptable extends Model
     protected $table = 'shoptable';
 
     protected $fillable = ["id", "shop_id", "table_number", "capacity", "status"];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class, 'shop_id', 'id');
+    }
 
        /**
      * @return string
@@ -60,5 +69,28 @@ class Shoptable extends Model
     public function getActionButtonsAttribute()
     {
             return $this->getShowButtonAttribute().' '.$this->getEditButtonAttribute().' '.$this->getDeleteButtonAttribute();
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusLabelAttribute()
+    {
+        $statusClasses = [
+            'available' => 'badge badge-success',
+            'occupied' => 'badge badge-danger',
+            'reserved' => 'badge badge-warning'
+        ];
+
+        $statusLabels = [
+            'available' => 'Available',
+            'occupied' => 'Occupied',
+            'reserved' => 'Reserved'
+        ];
+
+        $class = $statusClasses[$this->status] ?? 'badge badge-secondary';
+        $label = $statusLabels[$this->status] ?? ucfirst($this->status);
+
+        return "<span class='{$class}'>{$label}</span>";
     }
 }

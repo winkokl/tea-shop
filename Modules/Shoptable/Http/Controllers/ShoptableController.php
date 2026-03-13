@@ -12,6 +12,7 @@ use Modules\Shoptable\Http\Requests\CreateShoptableRequest;
 use Modules\Shoptable\Http\Requests\UpdateShoptableRequest;
 use Modules\Shoptable\Http\Requests\ShowShoptableRequest;
 use Modules\Shoptable\Repositories\ShoptableRepository;
+use Modules\Shop\Entities\Shop;
 
 class ShoptableController extends Controller
 {
@@ -43,7 +44,8 @@ class ShoptableController extends Controller
      */
     public function create(ManageShoptableRequest $request)
     {
-        return view('shoptable::create');
+        $shops = Shop::all();
+        return view('shoptable::create')->with('shops', $shops);
     }
 
     /**
@@ -65,8 +67,10 @@ class ShoptableController extends Controller
      */
     public function edit(Shoptable $shoptable, ManageShoptableRequest $request)
     {
+        $shops = Shop::all();
         return view('shoptable::edit')
-            ->withShoptable($shoptable);
+            ->withShoptable($shoptable)
+            ->with('shops', $shops);
     }
 
     /**
