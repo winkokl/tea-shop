@@ -43,7 +43,8 @@ class OrderController extends Controller
      */
     public function create(ManageOrderRequest $request)
     {
-        return view('order::create');
+        $shops = \Modules\Shop\Entities\Shop::all();
+        return view('order::create')->with('shops', $shops);
     }
 
     /**
@@ -53,7 +54,29 @@ class OrderController extends Controller
      */
     public function store(CreateOrderRequest $request)
     {
-        $this->order->create($request->except('_token','_method'));
+        $orderData = $request->except('_token', '_method', 'items');
+
+        // Create order
+        $order = $this->order->create($orderData);
+
+        // Create order items
+        if ($request->has('items') && is_array($request->items)) {
+            foreach ($request->items as $item) {
+                if (!empty($item['product_id']) && !empty($item['quantity'])) {
+                    \Modules\Orderitem\Entities\Orderitem::create([
+                        'order_id' => $order->id,
+                        'product_id' => $item['product_id'],
+                        'product_name' => $item['product_name'] ?? '',
+                        'quantity' => $item['quantity'],
+                        'unit_price' => $item['unit_price'] ?? 0,
+                        'price' => $item['unit_price'] ?? 0,
+                        'subtotal' => $item['subtotal'] ?? 0,
+                        'total' => $item['subtotal'] ?? 0,
+                    ]);
+                }
+            }
+        }
+
         return redirect()->route('admin.order.index')->withFlashSuccess(trans('order::alerts.backend.order.created'));
     }
 
@@ -65,8 +88,10 @@ class OrderController extends Controller
      */
     public function edit(Order $order, ManageOrderRequest $request)
     {
+        $shops = \Modules\Shop\Entities\Shop::all();
         return view('order::edit')
-            ->withOrder($order);
+            ->withOrder($order)
+            ->with('shops', $shops);
     }
 
     /**
@@ -77,7 +102,31 @@ class OrderController extends Controller
      */
     public function update(Order $order, UpdateOrderRequest $request)
     {
-        $this->order->updateById($order->id,$request->except('_token','_method'));
+        $orderData = $request->except('_token', '_method', 'items');
+
+        // Update order
+        $this->order->updateById($order->id, $orderData);
+
+        // Delete existing order items
+        \Modules\Orderitem\Entities\Orderitem::where('order_id', $order->id)->delete();
+
+        // Create new order items
+        if ($request->has('items') && is_array($request->items)) {
+            foreach ($request->items as $item) {
+                if (!empty($item['product_id']) && !empty($item['quantity'])) {
+                    \Modules\Orderitem\Entities\Orderitem::create([
+                        'order_id' => $order->id,
+                        'product_id' => $item['product_id'],
+                        'product_name' => $item['product_name'] ?? '',
+                        'quantity' => $item['quantity'],
+                        'unit_price' => $item['unit_price'] ?? 0,
+                        'price' => $item['unit_price'] ?? 0,
+                        'subtotal' => $item['subtotal'] ?? 0,
+                        'total' => $item['subtotal'] ?? 0,
+                    ]);
+                }
+            }
+        }
 
         return redirect()->route('admin.order.index')->withFlashSuccess(trans('order::alerts.backend.order.updated'));
     }

@@ -42,6 +42,9 @@ class ShoptableTableController extends Controller
             ->addColumn('status', function ($shoptable) {
                 return $shoptable->status_label;
             })
+            ->addColumn('created_at', function ($shoptable) {
+                return $shoptable->created_at;
+            })
             ->addColumn('updated_at', function ($shoptable) {
                 return $shoptable->updated_at;
             })

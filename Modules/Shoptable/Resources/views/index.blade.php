@@ -37,6 +37,7 @@
                             <th>Table Number</th>
                             <th>Capacity</th>
                             <th>Status</th>
+                            <th>Created At</th>
                             <th>{{ __('shoptable::labels.backend.shoptable.table.last_updated') }}</th>
                             <th>{{ __('labels.general.actions') }}</th>
                         </tr>
@@ -79,6 +80,7 @@
                     {data: 'table_number', name: 'table_number'},
                     {data: 'capacity', name: 'capacity'},
                     {data: 'status', name: 'status'},
+                    {data: 'created_at', name: 'created_at'},
                     {data: 'updated_at', name: 'updated_at'},
                     {data: 'actions', name: 'actions', searchable: false, sortable: false}
                 ],

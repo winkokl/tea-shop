@@ -33,6 +33,15 @@
                         <thead>
                         <tr>
                             <th>{{ __('order::labels.backend.order.table.id') }}</th>
+                            <th>Order Number</th>
+                            <th>Shop</th>
+                            <th>Table</th>
+                            <th>Total Amount</th>
+                            <th>Final Amount</th>
+                            <th>Payment Method</th>
+                            <th>Payment Status</th>
+                            <th>Order Status</th>
+                            <th>Ordered At</th>
                             <th>{{ __('order::labels.backend.order.table.last_updated') }}</th>
                             <th>{{ __('labels.general.actions') }}</th>
                         </tr>
@@ -71,6 +80,15 @@
                 },
                 columns: [
                     {data: 'id', name: 'id'},
+                    {data: 'order_number', name: 'order_number'},
+                    {data: 'shop', name: 'shop.name'},
+                    {data: 'table', name: 'table.table_number'},
+                    {data: 'total_amount', name: 'total_amount'},
+                    {data: 'final_amount', name: 'final_amount'},
+                    {data: 'payment_method', name: 'payment_method'},
+                    {data: 'payment_status', name: 'payment_status'},
+                    {data: 'order_status', name: 'order_status'},
+                    {data: 'ordered_at', name: 'ordered_at'},
                     {data: 'updated_at', name: 'updated_at'},
                     {data: 'actions', name: 'actions', searchable: false, sortable: false}
                 ],

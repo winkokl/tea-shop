@@ -43,6 +43,7 @@ class OrderRepository extends BaseRepository
     public function getForDataTable()
     {
         return $this->model
-            ->select('*');
+            ->with(['shop', 'table'])
+            ->select('orders.*');
     }
 }

@@ -24,7 +24,77 @@
 
         <div class="row mt-4 mb-4">
             <div class="col">
-                
+                <table class="table table-bordered table-striped">
+                    <tbody>
+                        <tr>
+                            <th>Order Number</th>
+                            <td>{{ $order->order_number }}</td>
+                        </tr>
+                        <tr>
+                            <th>Shop</th>
+                            <td>{{ $order->shop ? $order->shop->name : 'N/A' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Table</th>
+                            <td>{{ $order->table ? $order->table->table_number : 'N/A' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Total Amount</th>
+                            <td>{{ number_format($order->total_amount, 2) }}</td>
+                        </tr>
+                        <tr>
+                            <th>Discount Amount</th>
+                            <td>{{ number_format($order->discount_amount, 2) }}</td>
+                        </tr>
+                        <tr>
+                            <th>Final Amount</th>
+                            <td><strong>{{ number_format($order->final_amount, 2) }}</strong></td>
+                        </tr>
+                        <tr>
+                            <th>Payment Method</th>
+                            <td>{!! $order->payment_method_label !!}</td>
+                        </tr>
+                        <tr>
+                            <th>Payment Status</th>
+                            <td>{!! $order->payment_status_label !!}</td>
+                        </tr>
+                        <tr>
+                            <th>Order Status</th>
+                            <td>{!! $order->order_status_label !!}</td>
+                        </tr>
+                        <tr>
+                            <th>Ordered At</th>
+                            <td>{{ $order->ordered_at }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                @if($order->items && $order->items->count() > 0)
+                    <h5 class="mt-4">Order Items</h5>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($order->items as $index => $item)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $item->product ? $item->product->name : 'N/A' }}</td>
+                                    <td>{{ $item->quantity }}</td>
+                                    <td>{{ number_format($item->price, 2) }}</td>
+                                    <td>{{ number_format($item->quantity * $item->price, 2) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
+
             </div><!--col-->
         </div><!--row-->
     </div><!--card-body-->

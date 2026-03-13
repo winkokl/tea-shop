@@ -109,4 +109,77 @@ class Order extends Model
     {
             return $this->getShowButtonAttribute().' '.$this->getEditButtonAttribute().' '.$this->getDeleteButtonAttribute();
     }
+
+    /**
+     * @return string
+     */
+    public function getPaymentMethodLabelAttribute()
+    {
+        $methodClasses = [
+            'cash' => 'badge badge-success',
+            'kbzpay' => 'badge badge-primary',
+            'wavepay' => 'badge badge-info',
+            'card' => 'badge badge-warning'
+        ];
+
+        $methodLabels = [
+            'cash' => 'Cash',
+            'kbzpay' => 'KBZ Pay',
+            'wavepay' => 'Wave Pay',
+            'card' => 'Card'
+        ];
+
+        $class = $methodClasses[$this->payment_method] ?? 'badge badge-secondary';
+        $label = $methodLabels[$this->payment_method] ?? ucfirst($this->payment_method);
+
+        return "<span class='{$class}'>{$label}</span>";
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentStatusLabelAttribute()
+    {
+        $statusClasses = [
+            'pending' => 'badge badge-warning',
+            'paid' => 'badge badge-success',
+            'cancelled' => 'badge badge-danger'
+        ];
+
+        $statusLabels = [
+            'pending' => 'Pending',
+            'paid' => 'Paid',
+            'cancelled' => 'Cancelled'
+        ];
+
+        $class = $statusClasses[$this->payment_status] ?? 'badge badge-secondary';
+        $label = $statusLabels[$this->payment_status] ?? ucfirst($this->payment_status);
+
+        return "<span class='{$class}'>{$label}</span>";
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderStatusLabelAttribute()
+    {
+        $statusClasses = [
+            'pending' => 'badge badge-warning',
+            'preparing' => 'badge badge-info',
+            'completed' => 'badge badge-success',
+            'cancelled' => 'badge badge-danger'
+        ];
+
+        $statusLabels = [
+            'pending' => 'Pending',
+            'preparing' => 'Preparing',
+            'completed' => 'Completed',
+            'cancelled' => 'Cancelled'
+        ];
+
+        $class = $statusClasses[$this->order_status] ?? 'badge badge-secondary';
+        $label = $statusLabels[$this->order_status] ?? ucfirst($this->order_status);
+
+        return "<span class='{$class}'>{$label}</span>";
+    }
 }

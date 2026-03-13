@@ -119,4 +119,19 @@ class ProductController extends Controller
 
         return redirect()->route('admin.product.index')->withFlashSuccess(trans('product::alerts.backend.product.deleted'));
     }
+
+    /**
+     * Get products by shop ID
+     * @param int $shopId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getProductsByShop($shopId)
+    {
+        $products = Product::where('shop_id', $shopId)
+            ->where('is_available', 1)
+            ->orderBy('name')
+            ->get(['id', 'name', 'promo_price', 'org_price', 'stock_quantity']);
+
+        return response()->json($products);
+    }
 }

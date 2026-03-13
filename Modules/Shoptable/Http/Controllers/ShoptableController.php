@@ -107,4 +107,18 @@ class ShoptableController extends Controller
 
         return redirect()->route('admin.shoptable.index')->withFlashSuccess(trans('shoptable::alerts.backend.shoptable.deleted'));
     }
+
+    /**
+     * Get tables by shop ID
+     * @param int $shopId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTablesByShop($shopId)
+    {
+        $tables = Shoptable::where('shop_id', $shopId)
+            ->orderBy('table_number')
+            ->get(['id', 'table_number', 'capacity', 'status']);
+
+        return response()->json($tables);
+    }
 }
